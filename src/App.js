@@ -1,23 +1,14 @@
-import logo from './logo.svg';
 import './App.css';
-
+import useFetch from './utils/useFetch';
+import Display from './components/Display/Display.jsx'
 function App() {
+  const BASE_URL = "https://tfyincvdrafxe7ut2ziwuhe5cm0xvsdu.lambda-url.ap-south-1.on.aws/ticketAndUsers"
+  const {tickets,users, loading, error} = useFetch(BASE_URL)
+
+  console.log(tickets)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Display/>
     </div>
   );
 }
