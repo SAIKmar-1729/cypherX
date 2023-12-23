@@ -1,0 +1,145 @@
+/* For light theme */
+:root {
+    --card-bg: #fff;
+    --card-border: 1px solid lightgrey;
+    --indicator-online: #c07718;
+    --indicator-offline: #ccc;
+    --priority-bg: white;
+    --priority-border: 1px solid #ccc;
+    --tag-bg: #f2f2f2;
+    --tag-border: 1px solid #ccc;
+}
+
+/* For dark theme */
+.dark {
+    --card-bg: #161B22;
+    --card-border: 1px solid #555;
+    --indicator-online: #c07718;
+    --indicator-offline: #ccc;
+    --priority-bg: white;
+    --priority-border: 1px solid #ccc;
+    --tag-bg: #161B22;
+    --tag-border: 1px solid #ccc;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    border: var(--card-border);
+    min-width: 250px;
+    width: 100%;
+    border-radius: 6px;
+    background-color: var(--card-bg);
+    overflow: hidden;
+    flex: -1;
+    margin:5px
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.id {
+    font-weight: bold;
+    font-size: 15px;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    color: grey;
+}
+
+.online-indicator {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 5px;
+    right: 0px;
+    border: 2px white solid;
+}
+
+.online-indicator.online {
+    background-color: var(--indicator-online);
+}
+
+.online-indicator.offline {
+    background-color: var(--indicator-offline);
+}
+
+.card-image img {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 2px white solid;
+}
+
+.card-image {
+    position: relative;
+    margin: 5px;
+}
+
+.card-content {
+    padding: 5px;
+    flex-grow: 1;
+}
+
+.card-content-text>p {
+    padding: 0;
+    margin: 5px;
+    font-size: medium;
+    font-weight: bold;
+    white-space: pre-line;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.card-content-text {
+    display: flex;
+    margin: 5px;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin:5px;
+}
+
+.card-priority {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+    background-color: var(--priority-bg);
+    border: var(--priority-border);
+    padding: 2px 6px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+}
+
+.tag {
+    background-color: var(--tag-bg);
+    border: var(--tag-border);
+    padding: 2px 6px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+}
+
+.grey-circle {
+    width: 15px;
+    height: 12px;
+    margin: 0;
+    padding: 0;
+    object-fit: contain;
+    justify-content: center;
+}
+
+.card-content-image {
+    width: 15px;
+    height: 15px;
+    object-fit: contain;
+    border-radius: 50%;
+    margin: 5px;
+}

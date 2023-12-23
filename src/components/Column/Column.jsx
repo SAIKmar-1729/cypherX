@@ -1,15 +1,16 @@
+
+
 import React, { useEffect, useState } from 'react';
 import './column.css';
 import Card from './../Card/Card';
 import { images } from '../../constants';
 import { useTheme } from '../../ThemeContext';
+import ProfileImage from '../Profile';
 
-
-function Column({ columnName, columnData, groupType, users, }) {
+function Column({ columnName, columnData, groupType, users }) {
     const [userData, setUserData] = useState({});
     const { theme } = useTheme();
 
-    // user data fetch fn
     const fetchUserData = (userId) => {
         const user = users.find((user) => user.id === userId);
         return user || {};
@@ -22,7 +23,7 @@ function Column({ columnName, columnData, groupType, users, }) {
             case 'Priority':
                 switch (columnName) {
                     case 'Urgent':
-                        return images.urgent
+                        return images.urgent;
                     case 'Low':
                         return images.low;
                     case 'Medium':
@@ -35,7 +36,7 @@ function Column({ columnName, columnData, groupType, users, }) {
             case 'Status':
                 switch (columnName) {
                     case 'Todo':
-                        return images.todo
+                        return images.todo;
                     case 'Done':
                         return images.done;
                     case 'Cancelled':
@@ -45,43 +46,61 @@ function Column({ columnName, columnData, groupType, users, }) {
                     case 'Backlog':
                         return images.backlog;
                     default:
+                        return null;
                 }
             default:
+                return null;
         }
-    }
+    };
+
+    const prioritySymbols = {
+        0: images.dot,
+        1: images.low,
+        2: images.medium,
+        3: images.high,
+        4: images.urgent,
+    };
+
+    const StatusSymbols = {
+        Backlog: images.backlog,
+        'In progress': images.inprogress,
+        Todo: images.todo,
+        Done: images.done,
+        Cancelled: images.cancelled,
+    };
 
     useEffect(() => {
         const userDataMap = {};
         columnData.forEach((item) => {
             const userId = item.userId;
             if (!userDataMap[userId]) {
-                userDataMap[userId] = fetchUserData(userId);
+                const user = fetchUserData(userId);
+                userDataMap[userId] = user;
             }
         });
         setUserData(userDataMap);
     }, [columnData, users]);
 
-    function getIsOnline(columnName) {
-        for (const id in userData) {
-            const user = userData[id];
-            if (user.name === columnName) {
-                return user.available;
-            }
-        }
-    }
-    const isOnline = getIsOnline(columnName);
+    const isOnline = userData[columnName]?.available || false;
+    console.log(userData)
     return (
         <div className={`KanbanColumn ${theme}`}>
             <div className={`KanbanColumn-heading ${theme}`}>
                 <div className="KanbanColumn-heading-left">
-                    <span className='column-image'>{groupType === "User" ? (<>
-                        <img src={getImageSource()} alt="" />
-                        <div className={`online-indicator ${isOnline ? 'online' : 'offline'}`} />
-                    </>) : ((groupType === "Status") ? (<img src={getImageSource()} alt="" />) :
-                        ((groupType === "Priority") ? (<img src={getImageSource()} alt="" />) :
-                            (<div></div>)))}</span>
+                    <span className="column-image">
+                        {groupType === 'User' ? (
+                            <>
+                                <img src={getImageSource()} alt="" />
+                                <div className={`online-indicator ${isOnline ? 'online' : 'offline'}`} />
+                            </>
+                        ) : groupType === 'Status' || groupType === 'Priority' ? (
+                            <img src={getImageSource()} alt="" />
+                        ) : (
+                            <div></div>
+                        )}
+                    </span>
                     <span className="KanbanColumn-heading-Name">{columnName}</span>
-                    <span className='KanbanColumn-heading-len'>{columnData.length}</span>
+                    <span className="KanbanColumn-heading-len">{columnData.length}</span>
                 </div>
                 <div className="KanbanColumn-heading-right">
                     <img className="right-plus" src={images.plus} alt="" />
@@ -89,9 +108,22 @@ function Column({ columnName, columnData, groupType, users, }) {
                 </div>
             </div>
             <div className="KanbanColumn-map">
-                {columnData.map((item) => (
-                    <Card />
-                ))}
+                {columnData.map((item) => {
+                    const user = userData[item.userId] || fetchUserData(item.userId);
+                    return (
+                        <Card
+                            key={item.id}
+                            id={item.id}
+                            description={item.title}
+                            tags={item.tag}
+                            fullName={user.name}
+                            isOnline={user.available}
+                            grouping={groupType}
+                            prioritySymbol={prioritySymbols[item.priority]}
+                            statusSymbols={StatusSymbols[item.status]}
+                        />
+                    );
+                })}
             </div>
         </div>
     );

@@ -59,11 +59,12 @@ Light theme styles
 }
 
 .online-indicator.online {
-    background-color: #FFA800;
+    background-color: #c07718;
 }
 
 .online-indicator.offline {
     background-color: #ccc;
+    
 }
 
 .column-image img {
