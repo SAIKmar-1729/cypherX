@@ -1,0 +1,12 @@
+/* App.css */
+
+/* Ensure that the body and html elements also take up 100% height */
+body,
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.App {
+    height: 100vh;
+}

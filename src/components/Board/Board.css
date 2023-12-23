@@ -1,0 +1,28 @@
+/* Base styles */
+.Board {
+    background-color: aliceblue;
+}
+.main-board{
+    height: 100vh;
+}
+.Board-column {
+    display: flex;
+    justify-content: space-between;
+    background-color: #f5f5f5;
+
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+    .Board-column {
+        flex-direction: column;
+        flex-wrap: wrap;
+        /* Added property for column wrapping */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .Board {
+        padding: 10px;
+    }
+}
